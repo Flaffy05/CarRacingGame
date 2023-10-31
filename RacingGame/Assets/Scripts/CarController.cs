@@ -4,26 +4,40 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    /*
     public WheelCollider frontRight;
     public WheelCollider backRight;
     public WheelCollider frontLeft;
     public WheelCollider backLeft;
-
+    */
+    public WheelCollider[] wheelsColliders;
+    /*
     public Transform frontRightMesh;
     public Transform backRightMesh;
     public Transform frontLeftMesh;
     public Transform backLeftMesh;
+    */
+
+    public Transform[] wheelsMeshes;
+
+    
 
     private Rigidbody rb;
 
+    public AnimationCurve horsePowerCurve;
     public float acceleration;
     public float breakingForce;
     public float turningAngle;
 
+    public float[] gearRatios;
+    private int currentGear;
+
+    public Speedometer speedometer;
+
     private float currentSpeed;
 
-    //private float currentRpm;
-    private float currentAcceleration;
+    private float currentRpm;
+    private float currentTorque;
     private float currentBreakingForce;
     private float currentTurningAngle;
 
@@ -35,37 +49,32 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateCurrentSpeed();
-
-        currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
+        UpdateBreakingForce();
+        UpdateTorque();
+        //currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
 
         currentTurningAngle = Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(currentSpeed)/2.5f, 1, 10), -40,40);
 
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            currentBreakingForce = breakingForce;
-        }else
-        {
-            currentBreakingForce = 0f;
-        }
+        
 
-        backLeft.motorTorque = currentAcceleration;
-        backRight.motorTorque = currentAcceleration;
+        for (int i = 0; i < 2; i++)
+            wheelsColliders[i].motorTorque = currentTorque;
 
+        for (int i = 0; i < 4; i++)
+            wheelsColliders[i].brakeTorque = breakingForce;
 
-        backLeft.brakeTorque = currentBreakingForce;
-        backRight.brakeTorque = currentBreakingForce;
-
-        frontRight.steerAngle = currentTurningAngle;
-        frontLeft.steerAngle = currentTurningAngle;
+        for (int i = 0; i < 2; i++)
+            wheelsColliders[i+2].steerAngle = currentTurningAngle;
     }
 
     private void Update()
     {
-        UpdateWheelMeshes(frontLeft, frontLeftMesh);
-        UpdateWheelMeshes(frontRight, frontRightMesh);
-        UpdateWheelMeshes(backLeft, backLeftMesh);
-        UpdateWheelMeshes(backRight, backRightMesh);
+        for(int i = 0; i < wheelsColliders.Length; i++)
+            UpdateWheelMeshes(wheelsColliders[i], wheelsMeshes[i]);
+
+        speedometer.SetNeedleAngle(currentRpm/9000f);
+        //currentRpm += 0.01f;
     }
 
     private void UpdateWheelMeshes(WheelCollider collider, Transform meshTransform)
@@ -82,4 +91,24 @@ public class CarController : MonoBehaviour
     {
         currentSpeed = rb.velocity.magnitude;
     }
+
+    private void UpdateBreakingForce()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            currentBreakingForce = breakingForce;
+        }
+        else
+        {
+            currentBreakingForce = 0f;
+        }
+    }
+
+    private void UpdateTorque()
+    {
+        //float wheelsRpm;
+
+        //return (horsePowerCurve.Evaluate(Mathf.Clamp01(currentRpm))/currentRpm) * gearRatios[currentGear] * Input.GetAxisRaw("Vertical") * 5252f;
+    }
+
 }
