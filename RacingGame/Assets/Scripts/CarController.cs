@@ -22,7 +22,7 @@ public class CarController : MonoBehaviour
     private Rigidbody rb;
 
     public AnimationCurve horsePowerCurve;
-    public float acceleration;
+    public float horsePower;
     public float breakingForce;
     public float turningAngle;
     public float idleRpm;
@@ -34,7 +34,9 @@ public class CarController : MonoBehaviour
 
     public Speedometer speedometer;
 
-    private float currentSpeed;
+    
+    //private float currentSpeed;
+    public float CurrentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } }
 
     private float currentRpm;
     private float currentWheelsRpm;
@@ -50,7 +52,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateCurrentSpeed();
+        //UpdateCurrentSpeed();
         UpdateBreakingForce();
         UpdateTorque();
         UpdateSteerAngle();
@@ -71,6 +73,8 @@ public class CarController : MonoBehaviour
         UpdateWheelRpm();
 
         speedometer.SetNeedleAngle(currentRpm/8000f);
+        speedometer.SetSpeedText(CurrentSpeed);
+        speedometer.SetGearText(currentGear);
         //currentRpm += 0.01f;
     }
 
@@ -89,10 +93,6 @@ public class CarController : MonoBehaviour
         
     }
 
-    private void UpdateCurrentSpeed()
-    {
-        currentSpeed = rb.velocity.magnitude;
-    }
 
     private void UpdateBreakingForce()
     {
@@ -109,7 +109,7 @@ public class CarController : MonoBehaviour
     private void UpdateTorque()
     {
         currentRpm = Mathf.Lerp(currentRpm, Mathf.Max(idleRpm, currentWheelsRpm), Time.deltaTime * 3f);
-        currentTorque =  (horsePowerCurve.Evaluate(currentRpm)/(currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 52520f;
+        currentTorque =  (horsePowerCurve.Evaluate(currentRpm)/(currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 5252f*horsePower;
     }
 
     private void ApplyTorque()
@@ -145,8 +145,7 @@ public class CarController : MonoBehaviour
 
     private void UpdateSteerAngle()
     {
-        currentTurningAngle = Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(currentSpeed) / 2.5f, 1, 10), -40, 40);
-
+        currentTurningAngle = Mathf.Lerp(currentTurningAngle, Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(CurrentSpeed) / 5f, 1, 10), -40, 40), Time.deltaTime* 3f);
     }
 
     private void ApplySteerAngle()

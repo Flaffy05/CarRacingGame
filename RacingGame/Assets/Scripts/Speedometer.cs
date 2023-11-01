@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.UI;
+using UnityEngine.UI;
 
 public class Speedometer : MonoBehaviour
 {
@@ -11,8 +12,15 @@ public class Speedometer : MonoBehaviour
     public float minNeedleAngle;
     public float maxNeedleAngle;
     private float currentNeedleAngle = 0;
+    public TextMeshProUGUI speedText;
+    public TextMeshProUGUI gearText;
+
 
     
+    private void Update()
+    {
+        needleTransform.rotation = Quaternion.Euler(0,0,currentNeedleAngle);
+    }
 
     public void SetNeedleAngle(float value)
     {
@@ -21,8 +29,16 @@ public class Speedometer : MonoBehaviour
         currentNeedleAngle = Mathf.Lerp(minNeedleAngle,maxNeedleAngle, value);
     }
 
-    private void Update()
+    public void SetSpeedText(float value)
     {
-        needleTransform.rotation = Quaternion.Euler(0,0,currentNeedleAngle);
+        speedText.text = ((int)value).ToString();
     }
+
+    public void SetGearText(int value)
+    {
+        gearText.text = value.ToString();
+    }
+
+
+
 }
