@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    /*
-    public WheelCollider frontRight;
-    public WheelCollider backRight;
-    public WheelCollider frontLeft;
-    public WheelCollider backLeft;
-    */
-    public WheelCollider[] wheelsColliders;
-    /*
-    public Transform frontRightMesh;
-    public Transform backRightMesh;
-    public Transform frontLeftMesh;
-    public Transform backLeftMesh;
-    */
-
-    public Transform[] wheelsMeshes;
-
     
+    internal enum WheelDriveType
+    {
+        FourWheelDrive,
+        RearWheelDrive,
+        FrontWheelDrive
+    }
+
+
+    public WheelCollider[] wheelsColliders;
+    
+    public Transform[] wheelsMeshes;//transform of the wheels meshes
+
+    [SerializeField]private WheelDriveType wheelDrive = WheelDriveType.FourWheelDrive;
 
     private Rigidbody rb;
 
@@ -28,18 +25,23 @@ public class CarController : MonoBehaviour
     public float acceleration;
     public float breakingForce;
     public float turningAngle;
+    public float idleRpm;
+    public float maxRpm;
+    public float differentialRatio;
 
     public float[] gearRatios;
-    private int currentGear;
+    private int currentGear = 0;
 
     public Speedometer speedometer;
 
     private float currentSpeed;
 
     private float currentRpm;
+    private float currentWheelsRpm;
     private float currentTorque;
     private float currentBreakingForce;
     private float currentTurningAngle;
+
 
     private void Start()
     {
@@ -51,40 +53,40 @@ public class CarController : MonoBehaviour
         UpdateCurrentSpeed();
         UpdateBreakingForce();
         UpdateTorque();
-        //currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
-
-        currentTurningAngle = Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(currentSpeed)/2.5f, 1, 10), -40,40);
-
-
+        UpdateSteerAngle();
         
 
-        for (int i = 0; i < 2; i++)
-            wheelsColliders[i].motorTorque = currentTorque;
+        ApplyTorque();
+        ApplyBreakingForce();
+        ApplySteerAngle();
+        //currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
 
-        for (int i = 0; i < 4; i++)
-            wheelsColliders[i].brakeTorque = breakingForce;
 
-        for (int i = 0; i < 2; i++)
-            wheelsColliders[i+2].steerAngle = currentTurningAngle;
+
     }
 
     private void Update()
     {
-        for(int i = 0; i < wheelsColliders.Length; i++)
-            UpdateWheelMeshes(wheelsColliders[i], wheelsMeshes[i]);
+        UpdateWheelMeshes();
+        UpdateWheelRpm();
 
-        speedometer.SetNeedleAngle(currentRpm/9000f);
+        speedometer.SetNeedleAngle(currentRpm/8000f);
         //currentRpm += 0.01f;
     }
 
-    private void UpdateWheelMeshes(WheelCollider collider, Transform meshTransform)
+    private void UpdateWheelMeshes()
     {
         Vector3 position;
         Quaternion rotation;
-        collider.GetWorldPose(out position, out rotation);
-        meshTransform.position = position;
+        for (int i = 0; i < wheelsColliders.Length; i++)
+        {
+            wheelsColliders[i].GetWorldPose(out position, out rotation);
+            wheelsMeshes[i].position = position;
+            wheelsMeshes[i].rotation = rotation;
+        }   
+        
         //Quaternion offset = new ;
-        meshTransform.rotation = rotation;
+        
     }
 
     private void UpdateCurrentSpeed()
@@ -106,9 +108,77 @@ public class CarController : MonoBehaviour
 
     private void UpdateTorque()
     {
-        //float wheelsRpm;
-
-        //return (horsePowerCurve.Evaluate(Mathf.Clamp01(currentRpm))/currentRpm) * gearRatios[currentGear] * Input.GetAxisRaw("Vertical") * 5252f;
+        currentRpm = Mathf.Lerp(currentRpm, Mathf.Max(idleRpm, currentWheelsRpm), Time.deltaTime * 3f);
+        currentTorque =  (horsePowerCurve.Evaluate(currentRpm)/(currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 52520f;
     }
 
+    private void ApplyTorque()
+    {
+        switch(wheelDrive)
+        {
+            case WheelDriveType.FourWheelDrive:
+                for (int i = 0; i < 4; i++)
+                {
+                    wheelsColliders[i].motorTorque = currentTorque;
+                }
+                    
+                break;
+            case WheelDriveType.FrontWheelDrive:
+                for (int i = 0; i < 2; i++)
+                    wheelsColliders[i].motorTorque = currentTorque;
+                break;
+            case WheelDriveType.RearWheelDrive:
+                for (int i = 2; i < 4; i++)
+                    wheelsColliders[i].motorTorque = currentTorque;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void ApplyBreakingForce()
+    {
+        for (int i = 0; i < 4; i++)
+            wheelsColliders[i].brakeTorque = breakingForce;
+    }
+
+    private void UpdateSteerAngle()
+    {
+        currentTurningAngle = Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(currentSpeed) / 2.5f, 1, 10), -40, 40);
+
+    }
+
+    private void ApplySteerAngle()
+    {
+        for (int i = 0; i < 2; i++)
+            wheelsColliders[i].steerAngle = currentTurningAngle;
+    }
+
+    private void UpdateWheelRpm()
+    {
+        float sum = 0;
+
+        switch (wheelDrive)
+        {
+            case WheelDriveType.FourWheelDrive:
+                for (int i = 0; i < 4; i++)
+                    sum += wheelsColliders[i].rpm;
+                    currentWheelsRpm = Mathf.Abs((sum / 4f) * gearRatios[currentGear] * differentialRatio);
+                break;
+            case WheelDriveType.FrontWheelDrive:
+                for (int i = 0; i < 2; i++)
+                    sum += wheelsColliders[i].motorTorque = currentTorque;
+                    currentWheelsRpm = Mathf.Abs((sum / 2) * gearRatios[currentGear] * differentialRatio);
+                break;
+            case WheelDriveType.RearWheelDrive:
+                for (int i = 2; i < 4; i++)
+                    sum += wheelsColliders[i].motorTorque = currentTorque;
+                    currentWheelsRpm = Mathf.Abs((sum / 2) * gearRatios[currentGear] * differentialRatio);
+                break;
+
+            default:
+                break;
+        }
+    }
 }

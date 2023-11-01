@@ -200,50 +200,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8713757e7d56374ca39adbc82892fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelsColliders: []
-  wheelsMeshes: []
+  wheelsColliders:
+  - {fileID: 1086052047}
+  - {fileID: 671012779}
+  - {fileID: 1378680698}
+  - {fileID: 1439037185}
+  wheelsMeshes:
+  - {fileID: 864706388}
+  - {fileID: 770671240}
+  - {fileID: 331598544}
+  - {fileID: 1958375226}
+  wheelDrive: 0
   horsePowerCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
+      value: 0.054245282
+      inSlope: 0.8128931
+      outSlope: 0.8128931
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.14237057
     - serializedVersion: 3
-      time: 0.8201621
-      value: 1.0011096
-      inSlope: 0.006097291
-      outSlope: 0.006097291
+      time: 0.95780784
+      value: 0.9987511
+      inSlope: -0.007920813
+      outSlope: -0.007920813
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 1
     - serializedVersion: 3
-      time: 0.9999755
-      value: 0.94810814
-      inSlope: -0.8808569
-      outSlope: -0.8808569
+      time: 0.9999734
+      value: 0.14622205
+      inSlope: -7.431309
+      outSlope: -7.431309
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.5427244
+      inWeight: 0.19157928
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   acceleration: 1000
-  breakingForce: 10000
+  breakingForce: 0
   turningAngle: 50
+  idleRpm: 800
+  maxRpm: 8000
+  differentialRatio: 2
   gearRatios:
-  - 0.4
-  - 0.8
-  - 1.2
-  - 1.6
+  - 3
+  - 2.5
   - 2
+  - 1.5
+  - 1
   speedometer: {fileID: 621317924}
 --- !u!65 &47299805
 BoxCollider:
@@ -735,7 +747,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.055892017, y: -0.0000000037194672, z: 2.0821399e-10, w: 0.99843687}
+  m_LocalRotation: {x: 0.05589202, y: 4.4339504e-16, z: 2.934533e-18, w: 0.99843687}
   m_LocalPosition: {x: 6.428, y: 3.42, z: -15.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2166,7 +2178,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588074179}
-  m_LocalRotation: {x: 0.055892017, y: -0.0000000037194672, z: 2.0821399e-10, w: 0.99843687}
+  m_LocalRotation: {x: 0.05589202, y: 4.4339504e-16, z: 2.934533e-18, w: 0.99843687}
   m_LocalPosition: {x: 0, y: 1.84, z: -4.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
