@@ -63,6 +63,8 @@ public class CarController : MonoBehaviour
         ApplySteerAngle();
         //currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
 
+        GearChanging();
+
 
 
     }
@@ -167,12 +169,12 @@ public class CarController : MonoBehaviour
                 break;
             case WheelDriveType.FrontWheelDrive:
                 for (int i = 0; i < 2; i++)
-                    sum += wheelsColliders[i].motorTorque = currentTorque;
+                    sum += wheelsColliders[i].rpm;
                     currentWheelsRpm = Mathf.Abs((sum / 2) * gearRatios[currentGear] * differentialRatio);
                 break;
             case WheelDriveType.RearWheelDrive:
                 for (int i = 2; i < 4; i++)
-                    sum += wheelsColliders[i].motorTorque = currentTorque;
+                    sum += wheelsColliders[i].rpm;
                     currentWheelsRpm = Mathf.Abs((sum / 2) * gearRatios[currentGear] * differentialRatio);
                 break;
 
@@ -180,4 +182,26 @@ public class CarController : MonoBehaviour
                 break;
         }
     }
+
+    private void GearChanging()
+    {
+        //float f = Mathf.Abs(CurrentSpeed / 100f);
+        //float upgearlimit = (1 / (float)gearRatios.Length) * (currentGear + 1);
+        //float downgearlimit = (1 / (float)gearRatios.Length) * currentGear;
+
+        float f = currentRpm;
+        float upgearlimit = 6000f;
+        float downgearlimit = 2000f;
+
+        if (currentGear > 0 && f < downgearlimit)
+        {
+            currentGear--;
+        }
+
+        if (f > upgearlimit && (currentGear < (gearRatios.Length - 1)))
+        {
+            currentGear++;
+        }
+    }
+
 }
