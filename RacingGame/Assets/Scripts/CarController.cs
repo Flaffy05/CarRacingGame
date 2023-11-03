@@ -23,6 +23,7 @@ public class CarController : MonoBehaviour
 
     public AnimationCurve horsePowerCurve;
     public float horsePower;
+    public float maxSpeed;
     public float breakingForce;
     public float turningAngle;
     public float idleRpm;
@@ -111,7 +112,8 @@ public class CarController : MonoBehaviour
     private void UpdateTorque()
     {
         currentRpm = Mathf.Lerp(currentRpm, Mathf.Max(idleRpm, currentWheelsRpm), Time.deltaTime * 3f);
-        currentTorque =  (horsePowerCurve.Evaluate(currentRpm)/(currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 5252f*horsePower;
+        float rpm01 = Mathf.Clamp01(Mathf.Min(currentRpm, 8000f) / 8000f);
+        currentTorque =  ((horsePowerCurve.Evaluate(rpm01)*800f) /(currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 5252f*horsePower;
     }
 
     private void ApplyTorque()
@@ -185,7 +187,7 @@ public class CarController : MonoBehaviour
 
     private void GearChanging()
     {
-        //float f = Mathf.Abs(CurrentSpeed / 100f);
+        //float f = Mathf.Abs(CurrentSpeed / maxSpeed);
         //float upgearlimit = (1 / (float)gearRatios.Length) * (currentGear + 1);
         //float downgearlimit = (1 / (float)gearRatios.Length) * currentGear;
 
