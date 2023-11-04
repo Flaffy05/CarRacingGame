@@ -23,7 +23,7 @@ public class CarController : MonoBehaviour
 
     public AnimationCurve horsePowerCurve;
     public float horsePower;
-    public float maxSpeed;
+    //public float maxSpeed;
     public float breakingForce;
     public float turningAngle;
     public float idleRpm;
@@ -101,7 +101,7 @@ public class CarController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            currentBreakingForce = breakingForce;
+            currentBreakingForce = Mathf.Lerp(currentBreakingForce, breakingForce, Time.deltaTime);
         }
         else
         {
@@ -113,7 +113,8 @@ public class CarController : MonoBehaviour
     {
         currentRpm = Mathf.Lerp(currentRpm, Mathf.Max(idleRpm, currentWheelsRpm), Time.deltaTime * 3f);
         float rpm01 = Mathf.Clamp01(Mathf.Min(currentRpm, 8000f) / 8000f);
-        currentTorque =  ((horsePowerCurve.Evaluate(rpm01)*800f) /(currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 5252f*horsePower;
+        float torque = ((horsePowerCurve.Evaluate(rpm01) * horsePower) / (currentRpm)) * gearRatios[currentGear] * differentialRatio * Input.GetAxisRaw("Vertical") * 5252f;
+        currentTorque = Mathf.Lerp(currentTorque, torque, Time.deltaTime * 2f);
     }
 
     private void ApplyTorque()
@@ -144,12 +145,12 @@ public class CarController : MonoBehaviour
     private void ApplyBreakingForce()
     {
         for (int i = 0; i < 4; i++)
-            wheelsColliders[i].brakeTorque = breakingForce;
+            wheelsColliders[i].brakeTorque = currentBreakingForce;
     }
 
     private void UpdateSteerAngle()
     {
-        currentTurningAngle = Mathf.Lerp(currentTurningAngle, Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(CurrentSpeed) / 5f, 1, 10), -40, 40), Time.deltaTime* 3f);
+        currentTurningAngle = Mathf.Lerp(currentTurningAngle, Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(CurrentSpeed) / 50f, 1, 5), -45, 45), Time.deltaTime*3f);
     }
 
     private void ApplySteerAngle()
