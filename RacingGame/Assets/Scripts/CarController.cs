@@ -29,6 +29,8 @@ public class CarController : MonoBehaviour
     public float idleRpm;
     public float maxRpm;
     public float differentialRatio;
+    public float maxStiffness;
+    public AnimationCurve stiffnessCurve;
 
     public float[] gearRatios;
     private int currentGear = 0;
@@ -57,7 +59,8 @@ public class CarController : MonoBehaviour
         UpdateBreakingForce();
         UpdateTorque();
         UpdateSteerAngle();
-        
+
+        SpeedControlHelper();
 
         ApplyTorque();
         ApplyBreakingForce();
@@ -150,7 +153,7 @@ public class CarController : MonoBehaviour
 
     private void UpdateSteerAngle()
     {
-        currentTurningAngle = Mathf.Lerp(currentTurningAngle, Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(CurrentSpeed) / 50f, 1, 5), -45, 45), Time.deltaTime*3f);
+        currentTurningAngle = Mathf.Lerp(currentTurningAngle, Mathf.Clamp(turningAngle * Input.GetAxisRaw("Horizontal") / Mathf.Clamp(Mathf.Abs(CurrentSpeed) / 50f, 1, 10), -45, 45), Time.deltaTime*3f);
     }
 
     private void ApplySteerAngle()
@@ -204,6 +207,16 @@ public class CarController : MonoBehaviour
         if (f > upgearlimit && (currentGear < (gearRatios.Length - 1)))
         {
             currentGear++;
+        }
+    }
+
+    private void SpeedControlHelper()
+    {
+        for(int i= 0; i<4; i++)
+        {
+            WheelFrictionCurve sFriction = wheelsColliders[i].sidewaysFriction;
+            sFriction.stiffness = stiffnessCurve.Evaluate(CurrentSpeed / 100f)*maxStiffness+1;
+            wheelsColliders[i].sidewaysFriction = sFriction;
         }
     }
 
