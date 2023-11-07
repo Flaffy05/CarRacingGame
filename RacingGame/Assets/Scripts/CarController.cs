@@ -32,6 +32,9 @@ public class CarController : MonoBehaviour
     public float maxStiffness;
     public AnimationCurve stiffnessCurve;
 
+
+    public float upgearlimit = 6000f;
+    public float downgearlimit = 2000f;
     public float[] gearRatios;
     private int currentGear = 0;
 
@@ -196,8 +199,6 @@ public class CarController : MonoBehaviour
         //float downgearlimit = (1 / (float)gearRatios.Length) * currentGear;
 
         float f = currentRpm;
-        float upgearlimit = 6000f;
-        float downgearlimit = 2000f;
 
         if (currentGear > 0 && f < downgearlimit)
         {
