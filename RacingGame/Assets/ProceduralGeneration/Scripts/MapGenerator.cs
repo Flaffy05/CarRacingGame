@@ -22,7 +22,7 @@ public class MapGenerator : MonoBehaviour
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, scale, octaves, persistance, lacunarity, offset);
 
         MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawNoiseMap(noiseMap);
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap),null);
     }
 
     private void OnValidate()
