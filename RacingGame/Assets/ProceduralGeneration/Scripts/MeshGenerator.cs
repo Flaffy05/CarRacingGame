@@ -4,29 +4,29 @@ using UnityEngine;
 
 public static class MeshGenerator
 {
-    public static MeshData GenerateTerrainMesh(float[,] heightMap)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight)
     {
-        int width = heightMap.GetLength(0);
-        int height = heightMap.GetLength(1);
+        int size = heightMap.GetLength(0);
+        //int size = heightMap.GetLength(1);
         
-        int topLeftX = (width - 1) / -2;
-        int topLeftZ = (width - 1) / 2;
+        int topLeftX = (size - 1) / -2;
+        int topLeftZ = (size - 1) / 2;
 
-        MeshData meshData = new MeshData(width, height);
+        MeshData meshData = new MeshData(size);
         int vertexIndex = 0;
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < size; y++)
         {
-            for(int x = 0; x < width; x++)
+            for(int x = 0; x < size; x++)
             {
-                meshData.vertices[vertexIndex] = new Vector3(topLeftX+x, heightMap[x, y]*100f, topLeftZ-y);
-                meshData.uvs[vertexIndex] = new Vector2(x / (float)width, y / (float)height);
+                meshData.vertices[vertexIndex] = new Vector3(topLeftX+x, heightMap[x, y]*maxHeight, topLeftZ-y);
+                meshData.uvs[vertexIndex] = new Vector2(x / (float)size, y / (float)size);
 
 
-                if(x<width-1&&y<height-1)
+                if(x<size-1&&y<size-1)
                 {
-                    meshData.AddTriangle(vertexIndex, vertexIndex + width + 1, vertexIndex + width);
-                    meshData.AddTriangle(vertexIndex + width + 1, vertexIndex,vertexIndex + 1);
+                    meshData.AddTriangle(vertexIndex, vertexIndex + size + 1, vertexIndex + size);
+                    meshData.AddTriangle(vertexIndex + size + 1, vertexIndex,vertexIndex + 1);
                 }
 
                 vertexIndex++;
@@ -44,11 +44,11 @@ public class MeshData
 
     int triangleIndex;
 
-    public MeshData(int meshWidth, int meshHeight)
+    public MeshData(int meshSize)
     {
-        vertices = new Vector3[meshWidth * meshHeight];
-        triangles = new int[(meshWidth-1) * (meshHeight-1)*6];
-        uvs = new Vector2[meshWidth * meshHeight];
+        vertices = new Vector3[meshSize * meshSize];
+        triangles = new int[(meshSize-1) * (meshSize-1)*6];
+        uvs = new Vector2[meshSize * meshSize];
     }
     
     public void AddTriangle(int a, int b, int c)
