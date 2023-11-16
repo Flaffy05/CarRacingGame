@@ -2,17 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MapDisplay : MonoBehaviour
 {
-    public Renderer textureRenderer;
-    public MeshFilter meshFilter;
-    public MeshRenderer meshRenderer;
+    public Transform chunkParent;
+    public Material mapMaterial;
 
-    public void DrawMesh(MeshData meshData, Texture2D texture)
+    public int chunkNumber;
+
+    //public Chunk[] chunks;
+    //public List<Chunk> chunks = new List<Chunk>();
+    Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
+    //public List<Chunk> chunkList = new List<Chunk>();
+    
+    
+
+    public void DrawMesh(MeshData meshData, Texture2D texture, int chunkIndex, Vector2 chunkPosition, int chunkSize)
     {
-        meshFilter.sharedMesh = meshData.CreateMesh();
-        meshRenderer.sharedMaterial.mainTexture = texture;
+
+        if (chunkDictionay.ContainsKey(chunkPosition))
+        {
+            //do things
+            chunkDictionay[chunkPosition].textureRenderer.sharedMaterial = mapMaterial;
+            chunkDictionay[chunkPosition].textureRenderer.sharedMaterial.mainTexture = texture;//1
+            chunkDictionay[chunkPosition].meshFilter.sharedMesh = meshData.CreateMesh();
+            //chunkDictionay[chunkPosition].meshRenderer.sharedMaterial = mapMaterial; 
+        }
+        else
+        {   //create chunk
+            chunkDictionay.Add(chunkPosition, new Chunk(chunkPosition, chunkSize, chunkParent));
+        }
+        //if(true)
+        //{
+        //    chunkDictionay.Remove(chunkPosition);
+        //}
+
     }
+
+
+
 
     /*
     public void DrawNoiseMap(float[,] noiseMap)

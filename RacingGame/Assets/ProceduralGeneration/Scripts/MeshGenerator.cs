@@ -4,13 +4,13 @@ using UnityEngine;
 
 public static class MeshGenerator
 {
-    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight, Vector2 mapChunkOffset)
     {
         int size = heightMap.GetLength(0);
         //int size = heightMap.GetLength(1);
         
-        int topLeftX = (size - 1) / -2;
-        int topLeftZ = (size - 1) / 2;
+        int topLeftX = ((size - 1) / -2)+(int)mapChunkOffset.x;
+        int topLeftZ = (size - 1) / 2+(int)mapChunkOffset.y;
 
         MeshData meshData = new MeshData(size);
         int vertexIndex = 0;
