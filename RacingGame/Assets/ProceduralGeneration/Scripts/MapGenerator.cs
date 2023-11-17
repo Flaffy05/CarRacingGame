@@ -37,7 +37,7 @@ public class MapGenerator : MonoBehaviour
             {
 
                 Vector2 chunkPosOffset = new Vector2(x, j);
-                Vector2 chunkNoiseOffset = new Vector2(chunkSize * x, chunkSize * j);
+                Vector2 chunkNoiseOffset = new Vector2(x,j);
                 GenerateChunk(chunkPosOffset, chunkNoiseOffset);
             }
         }
@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour
 
     private void GenerateChunk(Vector2 chunkPosOffset, Vector2 chunkNoiseOffset)
     {
-        float[,] noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, chunkNoiseOffset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, chunkNoiseOffset+ offset);
 
         Color[] colorMap = new Color[chunkSize * chunkSize];
         for (int y = 0; y < chunkSize; y++)

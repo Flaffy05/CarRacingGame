@@ -13,8 +13,8 @@ public static class Noise
         Vector2[] octaveOffsets = new Vector2[octaves];
         for(int i = 0; i < octaves; i++)
         {
-            float offsetX = prng.Next(-100000, 100000) + offset.x * scale * mapWidth;
-            float offsetY = prng.Next(-100000, 100000) + offset.y * scale * mapWidth;
+            float offsetX = prng.Next(-100000, 100000) + offset.x * mapWidth * scale;
+            float offsetY = prng.Next(-100000, 100000) + offset.y * mapWidth * scale;
             octaveOffsets[i] = new Vector2(offsetX, offsetY);
         }
 
