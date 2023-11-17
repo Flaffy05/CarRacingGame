@@ -6,26 +6,28 @@ using UnityEngine;
 public class MapDisplay : MonoBehaviour
 {
     public Transform chunkParent;
-    public Material mapMaterial;
+    public Material mapMaterial; 
 
-    public int chunkNumber;
+    //public int chunkNumber;
 
     //public Chunk[] chunks;
     //public List<Chunk> chunks = new List<Chunk>();
     Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
-    //public List<Chunk> chunkList = new List<Chunk>();
+    //public List<Chunk> chunkList = new List<Chunk>(); 
     
     
 
-    public void DrawMesh(MeshData meshData, Texture2D texture, int chunkIndex, Vector2 chunkPosition, int chunkSize)
+    public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPosition, int chunkSize)
     {
 
         if (chunkDictionay.ContainsKey(chunkPosition))
         {
             //do things
+            chunkDictionay[chunkPosition].UpdateChunk(chunkPosition, chunkSize);
             chunkDictionay[chunkPosition].textureRenderer.sharedMaterial = mapMaterial;
             chunkDictionay[chunkPosition].textureRenderer.sharedMaterial.mainTexture = texture;//1
             chunkDictionay[chunkPosition].meshFilter.sharedMesh = meshData.CreateMesh();
+            
             //chunkDictionay[chunkPosition].meshRenderer.sharedMaterial = mapMaterial; 
         }
         else

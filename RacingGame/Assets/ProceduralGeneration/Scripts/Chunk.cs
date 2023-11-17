@@ -16,17 +16,28 @@ public class Chunk
     public Chunk(Vector2 position, int size, Transform parent)
     {
         this.position = position;
+        this.size = size;
 
         meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         //meshObject.GetComponent<Collider>().
-        meshObject.transform.position = position;
-        meshObject.transform.localScale = Vector3.one * size / 10f;
+        meshObject.transform.position = new Vector3(position.x*(size-2), 0, position.y* (size- 2));
+        meshObject.transform.localScale = Vector3.one;
         meshObject.transform.parent = parent;
 
         textureRenderer = meshObject.GetComponent<MeshRenderer>();
         meshFilter = meshObject.GetComponent<MeshFilter>();
         meshRenderer = meshObject.GetComponent<MeshRenderer>();
     }
+
+    public void UpdateChunk(Vector2 position, int size)
+    {
+        this.position = position;
+        this.size = size;
+        meshObject.transform.position = new Vector3(position.x * (size-2), 0, position.y * (size - 2));
+        meshObject.transform.localScale = Vector3.one;
+    }
+
+    
 
 
 

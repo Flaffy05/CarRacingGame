@@ -36,16 +36,16 @@ public class MapGenerator : MonoBehaviour
             for (int x = 0; x < numberOfChunks; x++)
             {
 
-                Vector2 chunkPosOffset = new Vector2(chunkSize*x, chunkSize * j);
+                Vector2 chunkPosOffset = new Vector2(x, j);
                 Vector2 chunkNoiseOffset = new Vector2(chunkSize * x, chunkSize * j);
-                GenerateChunk(chunkPosOffset, chunkNoiseOffset, j*numberOfChunks+x);
+                GenerateChunk(chunkPosOffset, chunkNoiseOffset);
             }
         }
     }
 
-    private void GenerateChunk(Vector2 chunkPosOffset, Vector2 chunkNoiseOffset, int chunkIndex)
+    private void GenerateChunk(Vector2 chunkPosOffset, Vector2 chunkNoiseOffset)
     {
-        float[,] noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, offset+chunkNoiseOffset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, chunkNoiseOffset);
 
         Color[] colorMap = new Color[chunkSize * chunkSize];
         for (int y = 0; y < chunkSize; y++)
@@ -72,7 +72,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, MaxHeight, chunkPosOffset), TextureGenerator.CreateTextureFromColorMap(colorMap, chunkSize), chunkIndex, chunkPosOffset, chunkSize);//2
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, MaxHeight, chunkPosOffset), TextureGenerator.CreateTextureFromColorMap(colorMap, chunkSize), chunkPosOffset, chunkSize);
     }
 
     private void Awake()
