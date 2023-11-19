@@ -20,7 +20,7 @@ public class Chunk
 
         meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         //meshObject.GetComponent<Collider>().
-        meshObject.transform.position = new Vector3(position.x*(size-2), 0, position.y* (size- 2));
+        meshObject.transform.position = new Vector3(position.x*(size-1), 0, position.y* (size- 1));
         meshObject.transform.localScale = Vector3.one;
         meshObject.transform.parent = parent;
 
@@ -33,7 +33,7 @@ public class Chunk
     {
         this.position = position;
         this.size = size;
-        meshObject.transform.position = new Vector3(position.x * (size-2), 0, position.y * (size - 2));
+        meshObject.transform.position = new Vector3(position.x * (size-1), 0, position.y * (size - 1));
         meshObject.transform.localScale = Vector3.one;
     }
 
