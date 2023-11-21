@@ -1,43 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 public class MapDisplay : MonoBehaviour
 {
-    public Transform chunkParent;
+    //public Transform chunkParent;
     public Material mapMaterial; 
 
     //public int chunkNumber;
 
-    //public Chunk[] chunks;
+    public MapChunk[] mapChunks;
     //public List<Chunk> chunks = new List<Chunk>();
-    Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
+    //Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
     //public List<Chunk> chunkList = new List<Chunk>(); 
     
     
 
-    public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPosition, int chunkSize)
+    public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPositionInWorldSpace)
     {
 
-        if (chunkDictionay.ContainsKey(chunkPosition))
-        {
-            //do things
-            chunkDictionay[chunkPosition].UpdateChunk(chunkPosition, chunkSize);
-            chunkDictionay[chunkPosition].textureRenderer.sharedMaterial = mapMaterial;
-            chunkDictionay[chunkPosition].textureRenderer.sharedMaterial.mainTexture = texture;//1
-            chunkDictionay[chunkPosition].meshFilter.sharedMesh = meshData.CreateMesh();
-            
-            //chunkDictionay[chunkPosition].meshRenderer.sharedMaterial = mapMaterial; 
-        }
-        else
-        {   //create chunk
-            chunkDictionay.Add(chunkPosition, new Chunk(chunkPosition, chunkSize, chunkParent));
-        }
-        //if(true)
-        //{
-        //    chunkDictionay.Remove(chunkPosition);
-        //}
+            mapChunks[0].UpdateChunk(chunkPositionInWorldSpace);
+            mapChunks[0].textureRenderer.sharedMaterial = mapMaterial;
+            mapChunks[0].textureRenderer.sharedMaterial.mainTexture = texture;
+            mapChunks[0].meshFilter.sharedMesh = meshData.CreateMesh();
 
     }
 

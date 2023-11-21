@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class MeshGenerator
 {
-    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight, Vector2 mapChunkOffset)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight)
     {
         int size = heightMap.GetLength(0);
         //int size = heightMap.GetLength(1);
