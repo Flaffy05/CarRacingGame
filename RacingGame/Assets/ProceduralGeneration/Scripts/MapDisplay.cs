@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
 {
-    //public Transform chunkParent;
+    public Transform chunkParent;
     public Material mapMaterial; 
 
     //public int chunkNumber;
-
+    
     public MapChunk[] mapChunks;
     //public List<Chunk> chunks = new List<Chunk>();
     //Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
@@ -15,13 +15,21 @@ public class MapDisplay : MonoBehaviour
     
     
 
-    public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPositionInWorldSpace)
+    public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPosition)
     {
+        if (mapChunks[(int)chunkPosition.x+(int)chunkPosition.y ]== null)
+        {
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * (int)Mathf.Sqrt(mapChunks.Length)] = new MapChunk(chunkPosition, 10, chunkParent);
+        }
+        else
+        {
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].UpdateChunk(chunkPosition);
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].textureRenderer.sharedMaterial = mapMaterial;
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].textureRenderer.sharedMaterial.mainTexture = texture;
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].meshFilter.sharedMesh = meshData.CreateMesh();
+        }
 
-            mapChunks[0].UpdateChunk(chunkPositionInWorldSpace);
-            mapChunks[0].textureRenderer.sharedMaterial = mapMaterial;
-            mapChunks[0].textureRenderer.sharedMaterial.mainTexture = texture;
-            mapChunks[0].meshFilter.sharedMesh = meshData.CreateMesh();
+            
 
     }
 

@@ -7,6 +7,9 @@ public class MapGenerator : MonoBehaviour
 
     //public MapChunk[] mapChunks;
 
+    public MapDisplay mapDisplay;
+
+
     public int numberOfChunks;
 
     public int chunkSize;
@@ -32,10 +35,31 @@ public class MapGenerator : MonoBehaviour
 
     float[,] falloff;
 
+    public float[,] noiseMap;
+
+    
+
     //public int NumberOfChunks { get => (int)Mathf.Sqrt(mapChunks.Length);}
 
     public void GenerateMap()
     {
+        mapDisplay = FindObjectOfType<MapDisplay>();
+        mapDisplay.mapChunks = new MapChunk[numberOfChunks* numberOfChunks];
+
+        noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
+
+        for (int y = 0; y < chunkSize; y++)
+        {
+            for (int x = 0; x < chunkSize; x++)
+            {
+                noiseMap[x, y] = heightCurve.Evaluate(noiseMap[x, y]);
+
+                //redo
+                if (useFalloff)
+                    noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloff[x, y]);
+            }
+        }
+
         for (int j = 0; j < numberOfChunks; j++) 
         {
             for (int x = 0; x < numberOfChunks; x++)
@@ -51,23 +75,34 @@ public class MapGenerator : MonoBehaviour
     private void GenerateChunk(Vector2 chunkPosOffset)
     {
         
-        float[,] noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, chunkPosOffset+ offset);
+        float[,] chunkNoiseMap = new float[chunkSize,chunkSize];
 
-        Color[] colorMap = new Color[chunkSize * chunkSize];
         for (int y = 0; y < chunkSize; y++)
         {
             for (int x = 0; x < chunkSize; x++)
             {
-                noiseMap[x, y] = heightCurve.Evaluate(noiseMap[x, y]);
+
+            }
+        }
+
+
+                //chunkNoiseMap = noiseMap;
+
+                Color[] colorMap = new Color[chunkSize * chunkSize];
+        for (int y = 0; y < chunkSize; y++)
+        {
+            for (int x = 0; x < chunkSize; x++)
+            {
+                //chunkNoiseMap[x, y] = heightCurve.Evaluate(chunkNoiseMap[x, y]);
 
                 //redo
-                if (useFalloff)
-                    noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloff[x, y]);
+                //if (useFalloff)
+                //    chunkNoiseMap[x, y] = Mathf.Clamp01(chunkNoiseMap[x, y] - falloff[x, y]);
 
 
                 for (int i = 0; i < regions.Length; i++)
                 {
-                    if (noiseMap[x, y] <= regions[i].height)
+                    if (chunkNoiseMap[x, y] <= regions[i].height)
                     {
                         colorMap[y * chunkSize + x] = regions[i].color;
                         break;
@@ -78,8 +113,8 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, MaxHeight), TextureGenerator.CreateTextureFromColorMap(colorMap, chunkSize), chunkPosOffset);
+        //MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, MaxHeight), TextureGenerator.CreateTextureFromColorMap(colorMap, chunkSize), chunkPosOffset*chunkSize);
     }
 
     private void Awake()
@@ -89,7 +124,7 @@ public class MapGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        falloff = FalloffGenerator.GenerateFallout(chunkSize);
+        falloff = FalloffGenerator.GenerateFallout(chunkSize*numberOfChunks);
         if (chunkSize<1)
         {
             chunkSize = 1;
