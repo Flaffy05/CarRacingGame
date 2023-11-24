@@ -32,7 +32,8 @@ public static class MeshGenerator
                 vertexIndex++;
             }
         }
-        meshData.FlatShading();
+        
+        //meshData.FlatShading();
 
         return meshData;
     }
@@ -64,7 +65,7 @@ public class MeshData
     public Mesh CreateMesh()
     {
         Mesh mesh = new Mesh();
-        FlatShading();
+        //FlatShading();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.uv = uvs;

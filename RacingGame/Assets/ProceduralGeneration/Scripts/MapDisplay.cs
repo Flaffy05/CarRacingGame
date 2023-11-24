@@ -6,7 +6,7 @@ public class MapDisplay : MonoBehaviour
     public Transform chunkParent;
     public Material mapMaterial; 
 
-    //public int chunkNumber;
+    public int chunkNumber;//number of chunks in a side of a grid of chunks
     
     public MapChunk[] mapChunks;
     //public List<Chunk> chunks = new List<Chunk>();
@@ -17,17 +17,25 @@ public class MapDisplay : MonoBehaviour
 
     public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPosition)
     {
-        if (mapChunks[(int)chunkPosition.x+(int)chunkPosition.y ]== null)
+        MapGenerator mapGenerator = FindObjectOfType<MapGenerator>();
+        chunkNumber = mapGenerator.numberOfChunks;
+        if(mapChunks == null || mapChunks.Length != chunkNumber*chunkNumber)  
         {
-            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * (int)Mathf.Sqrt(mapChunks.Length)] = new MapChunk(chunkPosition, 10, chunkParent);
+            
+            mapChunks = new MapChunk[chunkNumber * chunkNumber];
+
         }
-        else
+
+        if (mapChunks[(int)chunkPosition.x+(int)chunkPosition.y* chunkNumber] == null)
         {
-            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].UpdateChunk(chunkPosition);
-            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].textureRenderer.sharedMaterial = mapMaterial;
-            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].textureRenderer.sharedMaterial.mainTexture = texture;
-            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y].meshFilter.sharedMesh = meshData.CreateMesh();
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber] = new MapChunk(chunkPosition, mapGenerator.chunkSize, chunkParent);
         }
+        
+        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].UpdateChunk(chunkPosition, mapGenerator.chunkSize);
+        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial = mapMaterial;
+        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial.mainTexture = texture;
+        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].meshFilter.sharedMesh = meshData.CreateMesh();
+        
 
             
 

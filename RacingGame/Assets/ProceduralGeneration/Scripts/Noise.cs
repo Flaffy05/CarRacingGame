@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class Noise
 {
-    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight,int seed, float scale, int octaves, float persistance, float lacunarity, Vector2 offset)
+    public static float[,] GenerateNoiseMap(int mapWidth,int seed, float scale, int octaves, float persistance, float lacunarity, Vector2 offset)
     {
-        float[,] noiseMap = new float[mapWidth, mapHeight];
+        float[,] noiseMap = new float[mapWidth, mapWidth];
 
         System.Random prng = new System.Random(seed);
 
@@ -27,10 +27,10 @@ public static class Noise
         float minNoiseHeight = float.MaxValue;
 
         float halfWidth = mapWidth / 2f;
-        float halfHeight = mapHeight / 2f;
+        
 
 
-        for (int y=0; y<mapHeight;y++)
+        for (int y=0; y< mapWidth; y++)
         {
             for(int x=0; x<mapWidth;x++)
             {
@@ -41,7 +41,7 @@ public static class Noise
                 for (int i=0; i < octaves; i++)
                 {
                     float sampleX = (x-halfWidth) / scale * frequency + octaveOffsets[i].x;
-                    float sampleY = (y-halfHeight) / scale * frequency + octaveOffsets[i].y;
+                    float sampleY = (y- halfWidth) / scale * frequency + octaveOffsets[i].y;
 
                     //sampleY += offset.y * mapWidth/scale;
 
@@ -63,7 +63,7 @@ public static class Noise
                 noiseMap[x, y] = noiseHeight;
             }
         }
-        for (int y = 0; y < mapHeight; y++)
+        for (int y = 0; y < mapWidth; y++)
         {
             for (int x = 0; x < mapWidth; x++)
             {

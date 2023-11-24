@@ -43,30 +43,30 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
-        mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.mapChunks = new MapChunk[numberOfChunks* numberOfChunks];
+        //mapDisplay = FindObjectOfType<MapDisplay>();
+        //mapDisplay.mapChunks = new MapChunk[numberOfChunks* numberOfChunks];
 
-        noiseMap = Noise.GenerateNoiseMap(chunkSize, chunkSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
+        noiseMap = Noise.GenerateNoiseMap(numberOfChunks * (chunkSize - 1)+1, seed, noiseScale, octaves, persistance, lacunarity, offset);
 
-        for (int y = 0; y < chunkSize; y++)
+        for (int y = 0; y < numberOfChunks * (chunkSize - 1) + 1; y++)
         {
-            for (int x = 0; x < chunkSize; x++)
+            for (int x = 0; x < numberOfChunks * (chunkSize - 1) + 1; x++)
             {
                 noiseMap[x, y] = heightCurve.Evaluate(noiseMap[x, y]);
 
-                //redo
+                
                 if (useFalloff)
                     noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloff[x, y]);
             }
         }
 
-        for (int j = 0; j < numberOfChunks; j++) 
+        for (int y = 0; y < numberOfChunks; y++) 
         {
             for (int x = 0; x < numberOfChunks; x++)
             {
 
-                Vector2 chunkPosOffset = new Vector2(x, j);
-                //Vector2 chunkNoiseOffset = new Vector2(x,j);
+                Vector2 chunkPosOffset = new Vector2(x, y);
+                //Vector2 chunkNoiseOffset = new Vector2(x,y);
                 GenerateChunk(chunkPosOffset);
             }
         }
@@ -81,7 +81,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int x = 0; x < chunkSize; x++)
             {
-
+                chunkNoiseMap[x,y] = noiseMap[x+(int)chunkPosOffset.x*(chunkSize-1), y + (int)chunkPosOffset.y * (chunkSize - 1)]; 
             }
         }
 
@@ -93,7 +93,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int x = 0; x < chunkSize; x++)
             {
-                //chunkNoiseMap[x, y] = heightCurve.Evaluate(chunkNoiseMap[x, y]);
+                //chunkNoiseMap[x, y] = heightCurve.Evaluate(chunkNoiseMap[x, y]); 
 
                 //redo
                 //if (useFalloff)
@@ -114,7 +114,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         //MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, MaxHeight), TextureGenerator.CreateTextureFromColorMap(colorMap, chunkSize), chunkPosOffset*chunkSize);
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, MaxHeight), TextureGenerator.CreateTextureFromColorMap(colorMap, chunkSize), chunkPosOffset);
     }
 
     private void Awake()
@@ -124,7 +124,7 @@ public class MapGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        falloff = FalloffGenerator.GenerateFallout(chunkSize*numberOfChunks);
+        falloff = FalloffGenerator.GenerateFallout(numberOfChunks * (chunkSize - 1) + 1);
         if (chunkSize<1)
         {
             chunkSize = 1;
