@@ -74,6 +74,26 @@ public class MeshData
         return mesh;
     }
 
+    public void CalculateNormals()
+    {
+        Vector3[] vertexNormals = new Vector3[vertices.Length];
+        int triangleCount = triangles.Length;
+
+        for(int i= 0; i<triangleCount; i++)
+        {
+            int normalTriangleIndex = i * 3;
+            int vertexIndexA = triangles[normalTriangleIndex];
+            int vertexIndexB = triangles[normalTriangleIndex + 1];
+            int vertexIndexC = triangles[normalTriangleIndex + 2];
+        }
+    }
+
+    private Vector3 SurfaceNormalsFromIndices(int indexA, int indexB, int indexC)
+    {
+        Vector3 pointA = new Vector3();
+    }
+
+
     public void FlatShading()
     {
         Vector3[] flatShadedVertices = new Vector3[triangles.Length];
