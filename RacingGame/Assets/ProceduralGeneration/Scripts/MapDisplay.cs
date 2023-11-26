@@ -4,10 +4,12 @@ using UnityEngine;
 public class MapDisplay : MonoBehaviour
 {
     public Transform chunkParent;
-    public Material mapMaterial; 
+     
 
     public int chunkNumber;//number of chunks in a side of a grid of chunks
+
     
+
     public MapChunk[] mapChunks;
     //public List<Chunk> chunks = new List<Chunk>();
     //Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
@@ -15,7 +17,7 @@ public class MapDisplay : MonoBehaviour
     
     
 
-    public void DrawMesh(MeshData meshData, Texture2D texture, Vector2 chunkPosition)
+    public void DrawMesh(MeshData meshData, Vector2 chunkPosition)
     {
         MapGenerator mapGenerator = FindObjectOfType<MapGenerator>();
         chunkNumber = mapGenerator.numberOfChunks;
@@ -32,8 +34,8 @@ public class MapDisplay : MonoBehaviour
         }
         
         mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].UpdateChunk(chunkPosition, mapGenerator.chunkSize);
-        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial = mapMaterial;
-        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial.mainTexture = texture;
+        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial = mapGenerator.terrainMaterial;
+        //mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial.mainTexture = texture;
         mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].meshFilter.sharedMesh = meshData.CreateMesh();
         
 
