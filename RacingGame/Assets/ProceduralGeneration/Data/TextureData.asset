@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44124f32c8d88c8469c9c19c7344d407, type: 3}
   m_Name: TextureData
   m_EditorClassIdentifier: 
-  autoUpdate: 0
+  autoUpdate: 1

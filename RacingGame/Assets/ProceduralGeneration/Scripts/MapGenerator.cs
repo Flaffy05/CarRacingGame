@@ -68,6 +68,8 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+
         for (int y = 0; y < numberOfChunks; y++) 
         {
             for (int x = 0; x < numberOfChunks; x++)
@@ -126,7 +128,6 @@ public class MapGenerator : MonoBehaviour
         }
         if(terrainData != null)
         {
-
             terrainData.OnValuesUpdated -= OnValuesUpdated;
             terrainData.OnValuesUpdated += OnValuesUpdated;
         }

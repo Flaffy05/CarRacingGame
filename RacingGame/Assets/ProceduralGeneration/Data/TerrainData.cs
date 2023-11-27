@@ -14,4 +14,14 @@ public class TerrainData : UpdatableData
     public bool useFlatShading;
     public bool useFalloff;
 
+    public float maxHeight 
+    { 
+        get { return heightMultiplier*heightCurve.Evaluate(1); } 
+    }
+
+    public float minHeight
+    {
+        get { return heightMultiplier * heightCurve.Evaluate(0); }
+    }
+
 }
