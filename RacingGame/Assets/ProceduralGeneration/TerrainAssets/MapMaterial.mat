@@ -173,10 +173,10 @@ Material:
     - _EnableInstancedPerPixelNormal: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
-    - _Glossiness: 0
+    - _Glossiness: 0.53
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Metallic: 0
+    - _Metallic: 0.79
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
