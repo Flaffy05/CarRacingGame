@@ -200,8 +200,8 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _maxHeight: 0
-    - _minHeight: 0.21
+    - _maxHeight: 25.48
+    - _minHeight: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
