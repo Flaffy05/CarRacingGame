@@ -14,7 +14,7 @@ public class MapDisplay : MonoBehaviour
     //public List<Chunk> chunks = new List<Chunk>();
     //Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
     //public List<Chunk> chunkList = new List<Chunk>(); 
-    
+    //
     
 
     public void DrawMesh(MeshData meshData, Vector2 chunkPosition)

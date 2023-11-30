@@ -6,7 +6,6 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class TerrainData : UpdatableData
 {
-    //public int numberOfChunks;
 
     public float heightMultiplier;
     public AnimationCurve heightCurve;
