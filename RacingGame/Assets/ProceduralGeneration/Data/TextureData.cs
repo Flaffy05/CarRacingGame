@@ -6,10 +6,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class TextureData : UpdatableData
 {
-    public Color[] baseColors;
-    [Range(0,1)]
-    public float[] baseHeights;
-
+    public Color flatColor;
+    public Color steepColor;
 
     float savedMinHeight;
     float savedMaxHeight;
@@ -18,9 +16,11 @@ public class TextureData : UpdatableData
     {
         //do stuff
         //material.SetInt("_baseColorsCount", baseColors.Length);
-        //material.SetColorArray("_baseColors", baseColors);
+        //material.SetColorArray("_baseColors", b6444863
         //material.SetFloatArray("_baseHeights", baseHeights);
 
+        material.SetColor("_flatColor", flatColor);
+        material.SetColor("_steepColor", steepColor);
 
         UpdateMeshHeights(material, savedMinHeight, savedMaxHeight);
     }

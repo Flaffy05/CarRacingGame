@@ -13,9 +13,5 @@ MonoBehaviour:
   m_Name: TextureData
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  baseColors:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  baseHeights:
-  - 0
-  - 0
+  flatColor: {r: 0.18640976, g: 0.6698113, b: 0.23716554, a: 1}
+  steepColor: {r: 0.5660378, g: 0.3743071, b: 0.17888929, a: 1}

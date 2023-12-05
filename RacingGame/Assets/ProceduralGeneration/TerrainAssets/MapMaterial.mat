@@ -21,12 +21,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MapMaterial
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 5b05d2b9f8ddcc6409c52cfc420c79c4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _GLOSSYREFLECTIONS_OFF
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -177,10 +177,10 @@ Material:
     - _EnableInstancedPerPixelNormal: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
-    - _Glossiness: 0.53
+    - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightTransition: 0
-    - _Metallic: 0.79
+    - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
