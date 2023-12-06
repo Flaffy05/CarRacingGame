@@ -7,9 +7,6 @@ using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour
 {
-
-    //public MapChunk[] mapChunks;
-
     public MapDisplay mapDisplay;
     public Material terrainMaterial;
 
@@ -20,34 +17,12 @@ public class MapGenerator : MonoBehaviour
     public int numberOfChunks;
     public int chunkSize;
 
-    /*
-    public float noiseScale;
-
-    public float heightMultiplier;
-
-    public int octaves;
-    [Range(0f, 1f)]
-    public float persistance;
-    public float lacunarity;
-    public int seed;
-    public Vector2 offset;
-
-    public AnimationCurve heightCurve;
-    */
-
     public bool autoUpdate;
-
-    //public bool useFalloff;
 
     float[,] falloff;
 
     public float[,] noiseMap;
 
-    
-
-
-
-    //public int NumberOfChunks { get => (int)Mathf.Sqrt(mapChunks.Length);}
 
     public void GenerateMap()
     {
@@ -110,6 +85,7 @@ public class MapGenerator : MonoBehaviour
         if(!Application.isPlaying)
         {
             GenerateMap();
+            OnTextureValuesUpdated();
         }
     }
 

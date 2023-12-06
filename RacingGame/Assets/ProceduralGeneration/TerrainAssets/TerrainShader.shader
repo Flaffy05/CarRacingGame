@@ -19,8 +19,8 @@ Shader "Custom/TerrainShader"
 
         #pragma target 3.0
 
-        float4 _flatColor = float4(1,0,1,0);
-        float4 _steepColor = float4(1,1,0,1);
+        float3 _flatColor = float3(1,0,1);
+        float3 _steepColor = float3(1,0,1);
 
         float _maxHeight;
         float _minHeight;
@@ -38,16 +38,15 @@ Shader "Custom/TerrainShader"
 
         float3 lerp3(float3 a, float3 b, float t)
         {
-            return float3(a.x+(b.x-a.x)*t, a.y+(b.y-a.y)*t, a.z+(b.z-a.z)*t);
+            return saturate(float3(a.x+(b.x-a.x)*t, a.y+(b.y-a.y)*t, a.z+(b.z-a.z)*t));
         }
         
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             //1: steep;   0: flat
             float steepness = 1 - (dot(float3(0,1,0), IN.worldNormal));
-            //o.Albedo = lerp3(_flatColor.xyz, _steepColor.xyz, steepness);
-            //color = 
-            o.Albedo = float3(0,steepness,0);
+            o.Albedo = lerp3(_flatColor, _steepColor, steepness);
+
         }
 
 
