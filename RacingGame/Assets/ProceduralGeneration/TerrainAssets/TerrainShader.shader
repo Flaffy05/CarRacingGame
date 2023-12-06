@@ -19,11 +19,16 @@ Shader "Custom/TerrainShader"
 
         #pragma target 3.0
 
-        float3 _flatColor = float3(1,0,1);
-        float3 _steepColor = float3(1,0,1);
+        static const int maxNumberOfColors = 8;
+        int numberOfColors = 2;
 
-        float _maxHeight;
-        float _minHeight;
+        float3 flatColor = float3(1,0,1);
+        float3 steepColor = float3(1,0,1);
+
+        float3 colorArray[maxNumberOfColors];
+
+        float maxHeight;
+        float minHeight;
 
         struct Input
         {
@@ -45,7 +50,10 @@ Shader "Custom/TerrainShader"
         {
             //1: steep;   0: flat
             float steepness = 1 - (dot(float3(0,1,0), IN.worldNormal));
-            o.Albedo = lerp3(_flatColor, _steepColor, steepness);
+            
+            o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness)];
+            
+            //  o.Albedo = lerp3(_flatColor, _steepColor, steepness);
 
         }
 
