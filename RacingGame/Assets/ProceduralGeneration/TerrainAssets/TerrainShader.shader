@@ -41,6 +41,11 @@ Shader "Custom/TerrainShader"
             return a+(b-a)*t;
         }
 
+        float inverseLerp(float a, float b, float t)
+        {
+            return saturate((t-a)/(b-a));     
+        }
+
         float3 lerp3(float3 a, float3 b, float t)
         {
             return saturate(float3(a.x+(b.x-a.x)*t, a.y+(b.y-a.y)*t, a.z+(b.z-a.z)*t));
@@ -53,7 +58,7 @@ Shader "Custom/TerrainShader"
             
             o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness)];
             
-            //  o.Albedo = lerp3(_flatColor, _steepColor, steepness);
+            //o.Albedo = float3(inverseLerp(minHeight, maxHeight, IN.worldPos.y),0,0.5);
 
         }
 
