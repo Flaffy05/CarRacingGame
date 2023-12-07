@@ -13,36 +13,36 @@ MonoBehaviour:
   m_Name: TerrainData 1
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  heightMultiplier: 27.4
+  heightMultiplier: 30
   heightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.002822917
+      value: 0.028488398
+      inSlope: -0
+      outSlope: -0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.114321254
     - serializedVersion: 3
-      time: 0.5422305
-      value: 0.34665072
-      inSlope: 0.9157132
-      outSlope: 0.9157132
+      time: 0.65170974
+      value: 0.3179654
+      inSlope: 0.31555834
+      outSlope: 0.31555834
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.10657914
+      outWeight: 0.13878062
     - serializedVersion: 3
       time: 1.0001585
       value: 1.0078646
-      inSlope: -0.15756816
-      outSlope: -0.15756816
+      inSlope: 1.1397913
+      outSlope: 1.1397913
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.1324836
+      inWeight: 0.16164096
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

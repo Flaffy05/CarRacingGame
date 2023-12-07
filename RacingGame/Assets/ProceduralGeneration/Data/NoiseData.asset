@@ -15,7 +15,7 @@ MonoBehaviour:
   autoUpdate: 1
   noiseScale: 50
   octaves: 6
-  persistance: 0.38
-  lacunarity: 2.87
-  seed: 0
+  persistance: 0.3
+  lacunarity: 3.6
+  seed: 5
   offset: {x: 0, y: 0}
