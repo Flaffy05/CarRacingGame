@@ -13,6 +13,8 @@ public class MapChunk
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
 
+    private bool isActive = true;
+
     public MapChunk(Vector2 position, int size, Transform parent)
     {
 
@@ -37,9 +39,6 @@ public class MapChunk
         meshObject.transform.position = new Vector3(position.x * (size-1), 0, -position.y * (size - 1));
         //meshObject.transform.localScale = Vector3.one;
     }
-
-    
-
 
 
     public void SetVisible(bool visible)
