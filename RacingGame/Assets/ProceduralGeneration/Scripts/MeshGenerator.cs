@@ -23,13 +23,13 @@ public static class MeshGenerator
             for(int x = 0; x < size; x+= meshSimplificationIncrement)
             {
                 meshData.vertices[vertexIndex] = new Vector3(topLeftX+x, heightMap[x, y]*maxHeight, topLeftZ-y);
-                meshData.uvs[vertexIndex] = new Vector2(x / (float)size, y / (float)size);
+                meshData.uvs[vertexIndex] = new Vector2(x / (float)verticePerLine, y / (float)verticePerLine);
 
 
-                if(x<size-1&&y<size-1)
+                if(x< size - 1&&y< size - 1)
                 {
-                    meshData.AddTriangle(vertexIndex, vertexIndex + size + 1, vertexIndex + size);
-                    meshData.AddTriangle(vertexIndex + size + 1, vertexIndex,vertexIndex + 1);
+                    meshData.AddTriangle(vertexIndex, vertexIndex + verticePerLine + 1, vertexIndex + verticePerLine);
+                    meshData.AddTriangle(vertexIndex + verticePerLine + 1, vertexIndex,vertexIndex + 1);
                 }
 
                 vertexIndex++;

@@ -15,7 +15,7 @@ public class MapGenerator : MonoBehaviour
     public TextureData textureData;
 
     public int numberOfChunks;
-    public int chunkSize = 241;
+    public const int chunkSize = 241;
     [Range(0, 6)]
     public int chunkLod = 1;
 
