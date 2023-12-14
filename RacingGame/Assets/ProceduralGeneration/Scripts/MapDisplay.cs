@@ -1,22 +1,43 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
 public class MapDisplay : MonoBehaviour
 {
-    public Transform cameraPosition;
+    public float renderDistance;
+
+    public Transform cameraTransform;
     public Transform chunkParent;
      
 
     public int chunkNumber;//number of chunks in a side of a grid of chunks
 
-    
-
     public MapChunk[] mapChunks;
-    //public List<Chunk> chunks = new List<Chunk>();
-    //Dictionary<Vector2, Chunk> chunkDictionay = new Dictionary<Vector2, Chunk>();
-    //public List<Chunk> chunkList = new List<Chunk>(); 
-    //
     
+    public void UpdateVisibileChunks()
+    {
+        if (mapChunks == null || mapChunks.Length != chunkNumber * chunkNumber)
+        {
+            mapChunks = new MapChunk[chunkNumber * chunkNumber];
+        }
+        foreach (MapChunk mapChunk in mapChunks) 
+        {
+            Vector2 cameraPosition = new Vector2(cameraTransform.position.x, cameraTransform.position.z);
+            float cameraDistanceFromChunk = Vector2.Distance(mapChunk.chunkPosition, cameraPosition);
+
+            mapChunk.SetVisible(cameraDistanceFromChunk < renderDistance);
+            
+        }
+    }
+    /*
+    public void RemoveInactiveChunks()
+    {
+        //List<MapChunk> chunkList = FindObjectsByType<MapChunk>();
+        //foreach (MapChunk mapChunk in )
+        {
+
+        }
+    }*/
 
     public void DrawMesh(MeshData meshData, Vector2 chunkPosition)
     {

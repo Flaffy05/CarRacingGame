@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class MapChunk
 {
     public GameObject meshObject;
-    public Vector2 position;
+    public Vector2 position ;
     public int size;
+
+    public Vector2 chunkPosition
+    {
+        get { return new Vector2(meshObject.transform.position.x, meshObject.transform.position.z); }
+    }
 
     public Renderer textureRenderer;
     public MeshFilter meshFilter;
@@ -32,6 +38,8 @@ public class MapChunk
         meshRenderer = meshObject.GetComponent<MeshRenderer>();
     }
 
+    
+
     public void UpdateChunk(Vector2 position, int size)
     {
         this.position = position;
@@ -43,6 +51,14 @@ public class MapChunk
 
     public void SetVisible(bool visible)
     {
-        meshObject.SetActive(visible);
+        isActive = visible;
+        meshObject.SetActive(isActive);
+    }
+
+    public void DestroyChunk(bool destroy)
+    {
+        //meshObject.Destroy();
+        meshObject = null;
+        //meshObjec;
     }
 }

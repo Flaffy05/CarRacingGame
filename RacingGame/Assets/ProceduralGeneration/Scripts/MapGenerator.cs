@@ -25,6 +25,11 @@ public class MapGenerator : MonoBehaviour
 
     public float[,] noiseMap;
 
+    public void Update()
+    {
+        mapDisplay.UpdateVisibileChunks();
+    }
+
 
     public void GenerateMap()
     {
