@@ -15,7 +15,9 @@ public class MapGenerator : MonoBehaviour
     public TextureData textureData;
 
     public int numberOfChunks;
-    public int chunkSize;
+    public int chunkSize = 241;
+    [Range(0, 6)]
+    public int chunkLod = 1;
 
     public bool autoUpdate;
 
@@ -72,7 +74,7 @@ public class MapGenerator : MonoBehaviour
 
 
         //MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, terrainData.heightMultiplier), chunkPosOffset);
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, terrainData.heightMultiplier, chunkLod), chunkPosOffset);
     }
 
     private void Awake()
@@ -98,10 +100,6 @@ public class MapGenerator : MonoBehaviour
     private void OnValidate()
     {
         falloff = FalloffGenerator.GenerateFallout(numberOfChunks * (chunkSize - 1) + 1);
-        if (chunkSize<1)
-        {
-            chunkSize = 1;
-        }
         if(terrainData != null)
         {
             terrainData.OnValuesUpdated -= OnValuesUpdated;

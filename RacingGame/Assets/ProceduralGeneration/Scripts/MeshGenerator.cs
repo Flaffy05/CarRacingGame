@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class MeshGenerator
 {
-    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap,float maxHeight, int chunkLod)
     {
         int size = heightMap.GetLength(0);
         //int size = heightMap.GetLength(1);
@@ -12,12 +12,15 @@ public static class MeshGenerator
         int topLeftX = ((size - 1) / -2);
         int topLeftZ = (size - 1) / 2;
 
+        int meshSimplificationIncrement = (chunkLod==0) ? 1 : chunkLod*2;
+        int verticePerLine = (size - 1) / meshSimplificationIncrement + 1;
+
         MeshData meshData = new MeshData(size);
         int vertexIndex = 0;
 
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < size; y+= meshSimplificationIncrement)
         {
-            for(int x = 0; x < size; x++)
+            for(int x = 0; x < size; x+= meshSimplificationIncrement)
             {
                 meshData.vertices[vertexIndex] = new Vector3(topLeftX+x, heightMap[x, y]*maxHeight, topLeftZ-y);
                 meshData.uvs[vertexIndex] = new Vector2(x / (float)size, y / (float)size);
