@@ -29,15 +29,15 @@ public class MapDisplay : MonoBehaviour
             
         }
     }
-    /*
+    
     public void RemoveInactiveChunks()
     {
-        //List<MapChunk> chunkList = FindObjectsByType<MapChunk>();
+        //List<MapChunk> chunkList = FindObjectOfType<MapChunk>();
         //foreach (MapChunk mapChunk in )
         {
 
         }
-    }*/
+    }
 
     public void DrawMesh(MeshData meshData, Vector2 chunkPosition)
     {

@@ -55,10 +55,11 @@ public class MapChunk
         meshObject.SetActive(isActive);
     }
 
-    public void DestroyChunk(bool destroy)
+    public void DestroyChunk()
     {
         //meshObject.Destroy();
         meshObject = null;
+        // = null;
         //meshObjec;
     }
 }
