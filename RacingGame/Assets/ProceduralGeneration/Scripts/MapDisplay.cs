@@ -32,7 +32,8 @@ public class MapDisplay : MonoBehaviour
     
     public void RemoveInactiveChunks()
     {
-        //List<MapChunk> chunkList = FindObjectOfType<MapChunk>();
+        MapChunk[] chunkList = new MapChunk[10];
+        chunkList = FindObjectsOfType<MapChunk>();
         //foreach (MapChunk mapChunk in )
         {
 

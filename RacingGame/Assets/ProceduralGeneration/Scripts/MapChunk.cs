@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class MapChunk
+public class MapChunk : MonoBehaviour
 {
     public GameObject meshObject;
     public Vector2 position ;
@@ -29,6 +29,7 @@ public class MapChunk
 
         meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         //meshObject.GetComponent<Collider>().
+
         meshObject.transform.position = new Vector3(position.x*(size-1), 0, -position.y* (size- 1));
         //meshObject.transform.localScale = Vector3.one;
         meshObject.transform.parent = parent;
