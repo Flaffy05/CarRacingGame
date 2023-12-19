@@ -27,7 +27,7 @@ public class MapGenerator : MonoBehaviour
 
     public void Update()
     {
-        mapDisplay.UpdateVisibileChunks();
+        //mapDisplay.UpdateVisibileChunks();  
     }
 
 
@@ -35,6 +35,7 @@ public class MapGenerator : MonoBehaviour
     {
         //mapDisplay = FindObjectOfType<MapDisplay>();
         //mapDisplay.mapChunks = new MapChunk[numberOfChunks* numberOfChunks];
+        mapDisplay.RemoveInactiveChunks();
 
         noiseMap = Noise.GenerateNoiseMap(numberOfChunks * (chunkSize - 1)+1, noiseData.seed, noiseData.noiseScale, noiseData.octaves, noiseData.persistance, noiseData.lacunarity, noiseData.offset);
 

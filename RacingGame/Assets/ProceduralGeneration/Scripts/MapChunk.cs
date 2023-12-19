@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 
-public class MapChunk : MonoBehaviour
+public class MapChunk
 {
     public GameObject meshObject;
-    public Vector2 position ;
+    public Vector2 chunkCoordinates;
     public int size;
 
     public Vector2 chunkPosition
@@ -24,8 +25,9 @@ public class MapChunk : MonoBehaviour
     public MapChunk(Vector2 position, int size, Transform parent)
     {
 
-        this.position = position;
+        this.chunkCoordinates = position;
         this.size = size;
+        this.isActive = true;
 
         meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         //meshObject.GetComponent<Collider>().
@@ -43,7 +45,7 @@ public class MapChunk : MonoBehaviour
 
     public void UpdateChunk(Vector2 position, int size)
     {
-        this.position = position;
+        this.chunkCoordinates = position;
         this.size = size;
         meshObject.transform.position = new Vector3(position.x * (size-1), 0, -position.y * (size - 1));
         //meshObject.transform.localScale = Vector3.one;
@@ -58,9 +60,6 @@ public class MapChunk : MonoBehaviour
 
     public void DestroyChunk()
     {
-        //meshObject.Destroy();
         meshObject = null;
-        // = null;
-        //meshObjec;
     }
 }

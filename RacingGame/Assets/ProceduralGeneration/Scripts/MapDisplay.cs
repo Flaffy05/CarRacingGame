@@ -32,12 +32,11 @@ public class MapDisplay : MonoBehaviour
     
     public void RemoveInactiveChunks()
     {
-        MapChunk[] chunkList = new MapChunk[10];
-        chunkList = FindObjectsOfType<MapChunk>();
-        //foreach (MapChunk mapChunk in )
+        if (mapChunks == null || mapChunks.Length != 0) return;//asdf
+        foreach(MapChunk mapChunk in mapChunks)
         {
-
-        }
+            mapChunk.DestroyChunk();
+        }    
     }
 
     public void DrawMesh(MeshData meshData, Vector2 chunkPosition)
