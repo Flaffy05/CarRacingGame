@@ -25,7 +25,7 @@ public class MapChunk
     public MapChunk(Vector2 position, int size, Transform parent)
     {
 
-        this.chunkCoordinates = position;
+        chunkCoordinates = position;
         this.size = size;
         this.isActive = true;
 
@@ -41,7 +41,10 @@ public class MapChunk
         meshRenderer = meshObject.GetComponent<MeshRenderer>();
     }
 
-    
+    public static bool IsActive()
+    {
+        return true;
+    }
 
     public void UpdateChunk(Vector2 position, int size)
     {

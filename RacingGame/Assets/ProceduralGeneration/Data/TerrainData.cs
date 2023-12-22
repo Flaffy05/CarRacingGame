@@ -9,7 +9,7 @@ public class TerrainData : UpdatableData
 
     public float heightMultiplier;
     public AnimationCurve heightCurve;
-    //public int chunkSize;
+    public int chunkScale;
     public bool useFlatShading;
     public bool useFalloff;
 

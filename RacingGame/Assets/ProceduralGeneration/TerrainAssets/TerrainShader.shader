@@ -51,10 +51,14 @@ Shader "Custom/TerrainShader"
         
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
+            float albedo = 0;
             //1: steep;   0: flat
             float steepness = 1 - (dot(float3(0,1,0), IN.worldNormal));
+            float height = inverseLerp(minHeight, maxHeight, IN.worldPos.y);
             
-            o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness)];
+            o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness/2+inverseLerp(minHeight, maxHeight, IN.worldPos.y)/2)];
+
+            //o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness)];
             
             //o.Albedo = float3(inverseLerp(minHeight, maxHeight, IN.worldPos.y),0,0.5);
 
