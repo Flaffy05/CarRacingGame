@@ -8,8 +8,8 @@ public class MapDisplay : MonoBehaviour
 
     public Transform cameraTransform;
     public Transform chunkParent;
-     
 
+    [HideInInspector]
     public int chunkNumber;//number of chunks in a side of a grid of chunks
 
     public MapChunk[] mapChunks;
@@ -32,7 +32,7 @@ public class MapDisplay : MonoBehaviour
     
     public void RemoveInactiveChunks()
     {
-        if (mapChunks == null || mapChunks.Length != 0) return;//asdf
+        if (mapChunks == null || mapChunks.Length != 0) return;
         foreach(MapChunk mapChunk in mapChunks)
         {
             mapChunk.DestroyChunk();

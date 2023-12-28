@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour
 {
+    [HideInInspector]
     public MapDisplay mapDisplay;
     public Material terrainMaterial;
 
@@ -33,7 +34,9 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
-        //mapDisplay = FindObjectOfType<MapDisplay>();
+        if (mapDisplay == null)
+            mapDisplay = GetComponent<MapDisplay>();
+
         //mapDisplay.mapChunks = new MapChunk[numberOfChunks* numberOfChunks];
         //mapDisplay.RemoveInactiveChunks();
 
@@ -92,7 +95,7 @@ public class MapGenerator : MonoBehaviour
     {
         if(!Application.isPlaying)
         {
-            GenerateMap();
+            //GenerateMap();
             OnTextureValuesUpdated();
         }
     }

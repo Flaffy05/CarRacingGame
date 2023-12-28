@@ -60,7 +60,9 @@ Shader "Custom/TerrainShader"
 
             //o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness)];
             
-            //o.Albedo = float3(inverseLerp(minHeight, maxHeight, IN.worldPos.y),0,0.5);
+            //o.Albedo = float3(inverseLerp(minHeight, maxHeight, IN.worldPos.y),0,0);
+
+            //o.Albedo = float3(0,1,0);
 
         }
 
