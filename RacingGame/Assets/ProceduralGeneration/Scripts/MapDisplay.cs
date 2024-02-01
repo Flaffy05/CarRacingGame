@@ -10,7 +10,7 @@ public class MapDisplay : MonoBehaviour
     public Transform chunkParent;
 
     [HideInInspector]
-    public int chunkNumber;//number of chunks in a side of a grid of chunks
+    public int chunkNumber;//number of chunks on a side of a grid of chunks
 
     public MapChunk[] mapChunks;
     
@@ -52,7 +52,7 @@ public class MapDisplay : MonoBehaviour
 
         if (mapChunks[(int)chunkPosition.x+(int)chunkPosition.y* chunkNumber] == null)
         {
-            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber] = new MapChunk(chunkPosition, MapGenerator.chunkSize, chunkParent);
+            mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber] = new MapChunk(chunkPosition, MapGenerator.chunkSize, chunkParent, mapGenerator.chunkScale);
         }
         
         mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].UpdateChunk(chunkPosition, MapGenerator.chunkSize);

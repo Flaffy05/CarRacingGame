@@ -10,6 +10,7 @@ public class MapChunk
     public GameObject meshObject;
     public Vector2 chunkCoordinates;
     public int size;
+    public float scale;
 
     public Vector2 chunkPosition
     {
@@ -22,23 +23,25 @@ public class MapChunk
 
     private bool isActive = true;
 
-    public MapChunk(Vector2 position, int size, Transform parent)
+    public MapChunk(Vector2 position, int size, Transform parent, float scale)
     {
 
         chunkCoordinates = position;
         this.size = size;
+        this.scale = scale;
         this.isActive = true;
 
         meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         //meshObject.GetComponent<Collider>().
 
-        meshObject.transform.position = new Vector3(position.x*(size-1), 0, -position.y* (size- 1));
+        meshObject.transform.position = new Vector3(position.x * (size - 1)*scale, 0, -position.y * (size - 1)*scale);
         //meshObject.transform.localScale = Vector3.one;
         meshObject.transform.parent = parent;
 
         textureRenderer = meshObject.GetComponent<MeshRenderer>();
         meshFilter = meshObject.GetComponent<MeshFilter>();
         meshRenderer = meshObject.GetComponent<MeshRenderer>();
+        this.scale = scale;
     }
 
     public static bool IsActive()
@@ -50,7 +53,7 @@ public class MapChunk
     {
         this.chunkCoordinates = position;
         this.size = size;
-        meshObject.transform.position = new Vector3(position.x * (size-1), 0, -position.y * (size - 1));
+        meshObject.transform.position = new Vector3(position.x * (size-1)*scale, 0, -position.y * (size - 1) *scale);
         //meshObject.transform.localScale = Vector3.one;
     }
 

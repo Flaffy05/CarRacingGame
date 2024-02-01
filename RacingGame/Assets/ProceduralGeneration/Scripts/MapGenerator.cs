@@ -16,6 +16,7 @@ public class MapGenerator : MonoBehaviour
     public TextureData textureData;
 
     public int numberOfChunks;
+    public float chunkScale = 1f;
     public const int chunkSize = 241;
     [Range(0, 6)]
     public int chunkLod = 1;
@@ -30,6 +31,7 @@ public class MapGenerator : MonoBehaviour
     {
         //mapDisplay.UpdateVisibileChunks();  
     }
+
 
 
     public void GenerateMap()
@@ -83,7 +85,7 @@ public class MapGenerator : MonoBehaviour
 
 
         //MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, terrainData.heightMultiplier, chunkLod), chunkPosOffset);
+        mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(chunkNoiseMap, terrainData.heightMultiplier, chunkLod, chunkScale), chunkPosOffset);
     }
 
     private void Awake()
