@@ -49,7 +49,7 @@ public class MapChunk
         return true;
     }
 
-    public void UpdateChunk(Vector2 position, int size)
+    public void UpdateChunk(Vector2 position, int size, float scale)
     {
         this.chunkCoordinates = position;
         this.size = size;

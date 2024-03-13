@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: NoiseData
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  noiseScale: 50
-  octaves: 6
-  persistance: 0.24
+  noiseScale: 130.29
+  octaves: 4
+  persistance: 0.2
   lacunarity: 3.66
   seed: 5
   offset: {x: 0, y: 0}

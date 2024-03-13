@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TerrainData 1
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  heightMultiplier: 33.4
+  heightMultiplier: 6.18
   heightCurve:
     serializedVersion: 2
     m_Curve:

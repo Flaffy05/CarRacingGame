@@ -29,7 +29,7 @@ public class MapGenerator : MonoBehaviour
 
     public void Update()
     {
-        //mapDisplay.UpdateVisibileChunks();  
+        //mapDisplay.UpdateVisibileChunks();
     }
 
 

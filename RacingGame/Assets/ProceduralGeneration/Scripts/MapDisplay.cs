@@ -55,7 +55,7 @@ public class MapDisplay : MonoBehaviour
             mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber] = new MapChunk(chunkPosition, MapGenerator.chunkSize, chunkParent, mapGenerator.chunkScale);
         }
         
-        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].UpdateChunk(chunkPosition, MapGenerator.chunkSize);
+        mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].UpdateChunk(chunkPosition, MapGenerator.chunkSize, mapGenerator.chunkScale);
         mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial = mapGenerator.terrainMaterial;
         //mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].textureRenderer.sharedMaterial.mainTexture = texture;
         mapChunks[(int)chunkPosition.x + (int)chunkPosition.y * chunkNumber].meshFilter.sharedMesh = meshData.CreateMesh();
