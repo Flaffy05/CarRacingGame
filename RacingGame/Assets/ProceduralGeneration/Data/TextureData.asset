@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TextureData
   m_EditorClassIdentifier: 
   autoUpdate: 0
-  flatColor: {r: 1, g: 1, b: 1, a: 1}
-  steepColor: {r: 1, g: 1, b: 1, a: 1}
+  flatColor: {r: 0.09805298, g: 0, b: 1, a: 1}
+  steepColor: {r: 0.9811321, g: 0, b: 0, a: 1}
   colors:
   - {r: 0.25490198, g: 0.59607846, b: 0.039215688, a: 1}
   - {r: 0.14901961, g: 0.54509807, b: 0.02745098, a: 1}

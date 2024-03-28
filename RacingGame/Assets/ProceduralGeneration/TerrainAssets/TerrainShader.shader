@@ -56,8 +56,9 @@ Shader "Custom/TerrainShader"
             float steepness = 1 - (dot(float3(0,1,0), IN.worldNormal));
             float height = inverseLerp(minHeight, maxHeight, IN.worldPos.y);
             
-            o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness/2+inverseLerp(minHeight, maxHeight, IN.worldPos.y)/2)];
-
+            o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness/2+height/2)];
+            o.Smoothness = 0;
+            o.Metallic = 0;
             //o.Albedo = colorArray[(int)lerp(0, (float)numberOfColors, steepness)];
             
             //o.Albedo = float3(inverseLerp(minHeight, maxHeight, IN.worldPos.y),0,0);
